@@ -22,6 +22,10 @@ struct CustomizedCheckoutView: View {
             // Custom corner radius
             AcceleratedCheckoutButtons(cartID: cartID)
                 .cornerRadius(16)
+
+            // Pin the Apple Pay button to the white-outline style
+            AcceleratedCheckoutButtons(cartID: cartID)
+                .applePayStyle(.whiteOutline)
         }
     }
 }
