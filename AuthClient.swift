@@ -172,10 +172,17 @@ class AuthClient {
         request.httpBody = body
 
         let (data, _) = try await URLSession.shared.data(for: request)
-        let json = try JSONSerialization.jsonObject(with: data) as! [String: Any]
-        let cartCreate = (json["data"] as! [String: Any])["cartCreate"] as! [String: Any]
-        let cart = cartCreate["cart"] as! [String: Any]
-        return cart["checkoutUrl"] as! String
+        let result = try JSONDecoder().decode(CartCreateResponse.self, from: data)
+
+        if let error = result.data.cartCreate.userErrors.first {
+            throw CartError.userError(error.message)
+        }
+
+        guard let cart = result.data.cartCreate.cart else {
+            throw CartError.cartNotCreated
+        }
+
+        return cart.checkoutUrl
     }
     // [END auth.create-authenticated-cart]
 

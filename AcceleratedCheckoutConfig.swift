@@ -1,4 +1,5 @@
 // [START accelerated-checkouts.configure]
+import SwiftUI
 import ShopifyAcceleratedCheckouts
 
 let configuration = ShopifyAcceleratedCheckouts.Configuration(
