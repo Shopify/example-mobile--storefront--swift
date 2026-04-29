@@ -1,5 +1,6 @@
 import Foundation
 import CommonCrypto
+import Security
 import ShopifyCheckoutSheetKit
 
 class AuthClient {
@@ -149,7 +150,10 @@ class AuthClient {
         let query = """
         mutation cartCreate($input: CartInput!) {
             cartCreate(input: $input) {
-                cart { checkoutUrl }
+                cart {
+                    id
+                    checkoutUrl
+                }
                 userErrors { field message }
             }
         }
