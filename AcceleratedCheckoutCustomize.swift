@@ -9,15 +9,15 @@ struct CustomizedCheckoutView: View {
         VStack {
             // Show only Shop Pay
             AcceleratedCheckoutButtons(cartID: cartID)
-                .wallets([.shoppay])
+                .wallets([.shopPay])
 
             // Show only Apple Pay
             AcceleratedCheckoutButtons(cartID: cartID)
-                .wallets([.applepay])
+                .wallets([.applePay])
 
             // Show both in a specific order
             AcceleratedCheckoutButtons(cartID: cartID)
-                .wallets([.shoppay, .applepay])
+                .wallets([.shopPay, .applePay])
 
             // Custom corner radius
             AcceleratedCheckoutButtons(cartID: cartID)
