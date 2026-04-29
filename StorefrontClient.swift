@@ -117,7 +117,8 @@ class StorefrontClient {
 
     // [START integrate.cart-permalink]
     func buildCartPermalink(variantId: String, quantity: Int = 1) -> URL {
-        URL(string: "https://\(shopDomain)/cart/\(variantId):\(quantity)")!
+        let numericVariantId = variantId.split(separator: "/").last.map(String.init) ?? variantId
+        return URL(string: "https://\(shopDomain)/cart/\(numericVariantId):\(quantity)")!
     }
     // [END integrate.cart-permalink]
 }
