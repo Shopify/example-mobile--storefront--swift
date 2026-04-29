@@ -8,11 +8,11 @@ struct AcceleratedCheckoutView: View {
 
     var body: some View {
         if case .loading = renderState {
-           ProgressView()
+            ProgressView()
         }
 
         if case .error = renderState {
-           ErrorState()
+            Text("Couldn't load checkout. Please try again.")
         }
 
         AcceleratedCheckoutButtons(cartID: cartID)

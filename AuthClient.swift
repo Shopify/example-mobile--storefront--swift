@@ -126,19 +126,19 @@ class AuthClient {
         }
 
         let (_, tokenEndpoint) = try await discoverAuthEndpoints()
-        let parameters: [String: String] = [
-            "grant_type": "authorization_code",
-            "client_id": customerAccountsApiClientId,
-            "redirect_uri": customerAccountsApiRedirectUri,
-            "code": code,
-            "code_verifier": codeVerifier
+        var components = URLComponents()
+        components.queryItems = [
+            URLQueryItem(name: "grant_type", value: "authorization_code"),
+            URLQueryItem(name: "client_id", value: customerAccountsApiClientId),
+            URLQueryItem(name: "redirect_uri", value: customerAccountsApiRedirectUri),
+            URLQueryItem(name: "code", value: code),
+            URLQueryItem(name: "code_verifier", value: codeVerifier)
         ]
 
-        let body = parameters.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
         var request = URLRequest(url: URL(string: tokenEndpoint)!)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpBody = body.data(using: .utf8)
+        request.httpBody = components.percentEncodedQuery?.data(using: .utf8)
 
         let (data, _) = try await URLSession.shared.data(for: request)
         return try JSONDecoder().decode(OAuthTokenResult.self, from: data)
@@ -196,7 +196,7 @@ class AuthClient {
 
     // [START auth.present-checkout]
     func presentCheckout(checkoutUrl: URL, from viewController: UIViewController) {
-        ShopifyCheckoutSheetKit.present(checkout: checkoutUrl, from: viewController, delegate: viewController as? ShopifyCheckoutSheetKitDelegate)
+        ShopifyCheckoutSheetKit.present(checkout: checkoutUrl, from: viewController, delegate: viewController as? CheckoutDelegate)
     }
     // [END auth.present-checkout]
 }

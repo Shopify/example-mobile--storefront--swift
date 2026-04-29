@@ -9,13 +9,13 @@ struct CheckoutWithEventsView: View {
         VStack {
             AcceleratedCheckoutButtons(cartID: cartID)
                 .onComplete { event in
-                    cartManager.clearCart()
+                    // Clear your cart and navigate to a confirmation screen.
                 }
                 .onFail { error in
-                    // Show error
+                    // Surface the error to the buyer.
                 }
                 .onCancel {
-                    // Reset state
+                    // Reset any pending UI state.
                 }
         }
     }
